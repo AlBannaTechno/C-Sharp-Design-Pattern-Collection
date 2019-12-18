@@ -5,4 +5,11 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="BehavioralPatterns" />
+      <Folder Include="ConcurrencyPatterns" />
+      <Folder Include="CreationalPatterns" />
+      <Folder Include="StructuralPatterns" />
+    </ItemGroup>
+
 </Project>

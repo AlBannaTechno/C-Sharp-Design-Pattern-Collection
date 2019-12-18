@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using MainProject.SOLID_PRINCIPLES.Solve;
 
 namespace MainProject
 {
@@ -6,7 +8,8 @@ namespace MainProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            LiskovSubstitution.Run();
+            
         }
     }
 }
