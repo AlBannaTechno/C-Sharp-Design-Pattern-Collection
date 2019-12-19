@@ -161,7 +161,7 @@ namespace MainProject.CreationalPatterns.Builder
     {
         public static void Run()
         {
-            var root = new ContHtmlTag("root");
+            var root = new HtmlTag("root");
             root.AppendChild("nest-1") // root
                 .AppendChild("nest-2") // root
                 .ThenAppendChild("nest-3") // nest-3
