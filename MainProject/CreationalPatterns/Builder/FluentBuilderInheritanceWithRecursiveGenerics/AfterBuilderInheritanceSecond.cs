@@ -2,6 +2,7 @@
 using static System.Console;
 namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRecursiveGenerics
 {
+    // {[OK] : Fluent Builder Inheritance With Recursive Generics}
      namespace SecondSolution
     {
         public static class PersonBuilderStartPoint
