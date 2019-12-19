@@ -1,4 +1,6 @@
-﻿namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRecursiveGenerics
+﻿using System;
+
+namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRecursiveGenerics
 {
     namespace Solution
     {
@@ -7,41 +9,63 @@
             public string Name { get; set; }
             public string Position { get; set; }
 
+            public class Builder : PersonJobBuilder<Builder>
+            {
+                
+            }
+            public static Builder New() => new Builder();
             public override string ToString()
             {
                 return $"{nameof(Name)}: {Name}, {nameof(Position)}: {Position}";
             }
         }
-
-        public class PersonalInfoBuilder
+        
+        public abstract class PersonBuilder
         {
             protected Person person = new Person();
 
-            public PersonalInfoBuilder Called(string name)
+            public Person Build()
+            {
+                return person;
+            }
+
+        }
+
+        // class Foo : Bar<Foo>
+        // Next Means that derived class must inherit from PersonalInfoBuilder<TSelf>
+        public class PersonalInfoBuilder<TSelf> : PersonBuilder
+            where TSelf : PersonalInfoBuilder<TSelf>
+        {
+            public TSelf Called(string name)
             {
                 person.Name = name;
-                return this;
+                return (TSelf)this;
             }
         }
 
-        public class PersonJobBuilder : PersonalInfoBuilder
+        /*
+         * We can just do this : 
+         * public class PersonJobBuilder : PersonalInfoBuilder<PersonJobBuilder>
+         *
+         * But this means we can't go deep and inherited from PersonJobBuilder
+         * So if we need to do infinite inheritance we need to make every derived class generic to it self
+         * Also notice : With every inheritance level the class definition will be longer and longer 
+         */
+        public class PersonJobBuilder<TSelf> : PersonalInfoBuilder<PersonJobBuilder<TSelf>>
+            where TSelf : PersonJobBuilder<TSelf>
         {
-            public PersonJobBuilder WorksAs(string position)
+            public TSelf WorksAs(string position)
             {
                 person.Position = position;
-                return this;
+                return (TSelf)this;
             }
         }
         public static class BeforeBuilderInheritance
         {
             public static void Run()
             {
-                // var personJobBuilder = new PersonJobBuilder();
-                // personJobBuilder.Called("Osama")
-                //     .WorksAs("ss"); // we can not do this 
-                // // we not allowed to use the containing type as a return type
-                //
-                // So We need to make PersonalInfoBuilder.Called Return PersonJobBuilder Not PersonalInfoBuilder :) 
+                var osamaJobBuilder = Person.New().Called("Osama").WorksAs("Software Developer").Build();
+                Console.WriteLine(osamaJobBuilder);
             }
         }
     }
