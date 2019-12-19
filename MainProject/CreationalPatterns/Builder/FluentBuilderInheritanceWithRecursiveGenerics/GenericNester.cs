@@ -22,6 +22,18 @@ namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRec
             new Builder(name, isTag, indentSize);
     }
 
+    public static class BracketsHtmlTagNesterStartPoint
+    {
+        public class Builder : BracketsHtmlTagNester<Builder>
+        {
+            public Builder(string name, bool isTag = true, int indentSize = 2) : base(name, isTag, indentSize)
+            {
+            }
+        }
+        public static Builder New(string name, bool isTag = true, int indentSize = 2) => 
+            new Builder(name, isTag, indentSize);
+    }
+    
     // First Direct Child [1]
     public class GeneralTagNester<TSelf> : GeneralNester
     where TSelf : GeneralTagNester<TSelf>
@@ -49,6 +61,7 @@ namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRec
             return new string(' ', ind);
         }
         
+        // ### TODO :: Need To Use This
         protected internal virtual string ToStringImplementation(int indentLevel)
         {
             var sb = new StringBuilder();
@@ -160,13 +173,51 @@ namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRec
             return ToStringImplementation(0);
         }
     }
+
+    public class BracketsHtmlTagNester<TSelf> :
+        HtmlTagNester<BracketsHtmlTagNester<TSelf>>
+    where TSelf : BracketsHtmlTagNester<TSelf>
+    {
+        public BracketsHtmlTagNester(string name, bool isTag = true, int indentSize = 2) 
+            : base(name, isTag, indentSize)
+        {
+        }
+
+        protected internal override string ToStringImplementation(int indentLevel)
+        {
+            var sb = new StringBuilder();
+            var indent = indentTo(indentLevel * IndentSize);
+            if (IsTag)
+            {
+                sb.AppendLine($"{indent}[{Name}]");
+                foreach (var child in Children)
+                {
+                    sb.Append(child.ToStringImplementation(indentLevel + 1));
+                }
+                sb.AppendLine($"{indent}[/{Name}]");
+            }
+            else
+            {
+                sb.AppendLine($"{indent}{Name}");
+            }
+            return sb.ToString();
+        }
+        
+        // may be we need to test this
+        public override string ToString()
+        {
+            return ToStringImplementation(0);
+        }
+    }
     public class GenericNesterWorks
     {
         public static void Run()
         {
-            var htmlBuilder = HtmlTagNesterStartPoint.New("root : [Start Generic]");
+            // var htmlBuilder = HtmlTagNesterStartPoint.New("root : [Start Generic 01]");
+
+            var bracketsHtmlBuild = BracketsHtmlTagNesterStartPoint.New("Root [Brackets]");
             
-             htmlBuilder.AppendChild("nest-1") // root
+            bracketsHtmlBuild.AppendChild("nest-1") // root
                 .AppendChild("nest-2") // root
                 .ThenAppendChild("nest-3") // nest-3
                     .AppendChild("nest-3-1") // nest-3
@@ -185,7 +236,8 @@ namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRec
             nest32.AppendText("From OutSide");
             nest34.AppendText("From Out Side Of [Then]");
             text51.Name = "Changed From Out Side";
-            WriteLine(htmlBuilder);
+            // WriteLine(htmlBuilder);
+            WriteLine(bracketsHtmlBuild);
             WriteLine(nest32);
             WriteLine(nest34);
             WriteLine(text51);
