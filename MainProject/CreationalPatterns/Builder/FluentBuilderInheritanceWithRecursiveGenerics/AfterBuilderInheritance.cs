@@ -4,16 +4,21 @@ namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRec
 {
     namespace Solution
     {
-        public class Person
+        public static class PersonBuilderStartPoint
         {
-            public string Name { get; set; }
-            public string Position { get; set; }
-
+            // we must have a start point 
             public class Builder : PersonJobBuilder<Builder>
             {
                 
             }
             public static Builder New() => new Builder();
+        }
+        public class Person
+        {
+            public string Name { get; set; }
+            public string Position { get; set; }
+
+           
             public override string ToString()
             {
                 return $"{nameof(Name)}: {Name}, {nameof(Position)}: {Position}";
@@ -64,7 +69,7 @@ namespace MainProject.CreationalPatterns.Builder.FluentBuilderInheritanceWithRec
         {
             public static void Run()
             {
-                var osamaJobBuilder = Person.New().Called("Osama").WorksAs("Software Developer").Build();
+                var osamaJobBuilder = PersonBuilderStartPoint.New().Called("Osama").WorksAs("Software Developer").Build();
                 Console.WriteLine(osamaJobBuilder);
             }
         }
