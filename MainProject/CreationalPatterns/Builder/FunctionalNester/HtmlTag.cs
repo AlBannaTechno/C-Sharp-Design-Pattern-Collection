@@ -47,7 +47,7 @@ namespace MainProject.CreationalPatterns.Builder.FunctionalNester
             return this;
         }
 
-        public static string AttributesFormatter(IEnumerable<(string name, string value)> attributes)
+        private static string AttributesFormatter(IEnumerable<(string name, string value)> attributes)
         {
             var sb = new StringBuilder();
             foreach (var attribute in attributes)

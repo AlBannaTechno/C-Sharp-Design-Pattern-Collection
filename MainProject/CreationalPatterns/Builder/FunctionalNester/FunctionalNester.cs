@@ -10,7 +10,7 @@ namespace MainProject.CreationalPatterns.Builder.FunctionalNester
         public readonly List<FunctionalNester<T>> Children = new List<FunctionalNester<T>>();
         public T Item { get; set; }
 
-        #region Make Next [p,f,...] public / private depends on design descessions , and I will leave all of them public 
+        #region Making Next [p,f,...] public / private depends on design descessions , and I will leave all of them public 
 
         public FunctionalNester<T> Parent { get; set; }
         public bool AllowChildren { get; set; } = true;
