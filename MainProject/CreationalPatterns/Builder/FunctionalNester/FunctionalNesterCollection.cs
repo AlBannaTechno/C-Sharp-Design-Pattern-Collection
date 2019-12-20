@@ -15,6 +15,7 @@ namespace MainProject.CreationalPatterns.Builder.FunctionalNester
             TestAdvancedHtmlTagFormatter();
         }
 
+        // TODO :: Allow Add Child without create new instance of HtmlTag [we should use params {and reflection}]
         private static void TestAdvancedHtmlTagFormatter()
         {
             var root = new FunctionalNester<HtmlTag>(HtmlTag.ToStringFormatter)
