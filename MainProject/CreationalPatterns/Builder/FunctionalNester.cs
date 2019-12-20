@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -14,7 +15,8 @@ namespace MainProject.CreationalPatterns.Builder
         [AttributeUsage(AttributeTargets.Property)]
         public class AllowChildrenBinderAttribute : Attribute
         {
-            
+            // if this is false : nester will just continue without any work on the passed element
+            public bool ThrownError { get; set; } = true;
         }
         
          // may use IFunctionalNesterItem : to restrict T of FunctionalNester
@@ -29,6 +31,7 @@ namespace MainProject.CreationalPatterns.Builder
         public T Item { get; set; }
         public FunctionalNester<T> Parent { get; set; }
         public bool AllowChildren { get; set; } = true;
+        public bool ThrownErrorOnChildrenAdd { get; set; } = true;
         public readonly Func<FunctionalNester<T>, int ,string> ToStringImplementation;
 
         public FunctionalNester(Func<FunctionalNester<T>, int ,string> toStringImplementation)
@@ -36,9 +39,9 @@ namespace MainProject.CreationalPatterns.Builder
             ToStringImplementation = toStringImplementation;
             
         }
-        private (bool allowChildrentAttributeDefined, bool allowChildrenValue) IsAllowingChildren(T item)
+        private (bool allowChildrentAttributeDefined, bool allowChildrenValue, bool thrownError) IsAllowingChildren(T item)
         {
-            (bool allowChildrentAttributeDefined, bool allowChildrenValue) result = (false ,false);
+            (bool allowChildrentAttributeDefined, bool allowChildrenValue, bool thrownError) result = (false ,false, true);
             // we will use reflection with attributes
             var allowChildrenField = typeof(T).GetProperties().FirstOrDefault(f => f.IsDefined(typeof(AllowChildrenBinderAttribute)));
             if (allowChildrenField != null)
@@ -46,19 +49,30 @@ namespace MainProject.CreationalPatterns.Builder
                 result.allowChildrentAttributeDefined = true;
                 var allowChildren = allowChildrenField.GetValue(item);
                 result.allowChildrenValue = (bool) allowChildren;
+                var attr = (AllowChildrenBinderAttribute) allowChildrenField.GetCustomAttribute(typeof(AllowChildrenBinderAttribute));
+                result.thrownError = attr.ThrownError;
             }
             return result;
         }
-        private void CheckAddChildrenAvailability()
+        private bool CheckAddChildrenAvailability()
         {
             // we may allow to not throw an error : just print warning or do nothing
             if (!AllowChildren)
             {
+                if (!ThrownErrorOnChildrenAdd)
+                {
+                    Console.Error.WriteLine("Please review your nester chain : because some " +
+                                "elements will not set because its parent can not have a children");
+                    Console.Error.WriteLine("You can Also Enable Thrown Error on AllowChildrenBinder Attribute " +
+                                            "To Track This problem");
+                    return false;
+                }
                 throw new Exception("You can not add any child to this element");
             }
+            return true;
         }
         
-        private bool CheckAddChildrenAllowabilityOfThis(T item, bool allowChildren)
+        private (bool allowChildrenDecision, bool thrownError) CheckAddChildrenAllowabilityOfThis(T item, bool allowChildren)
         {
             var acResult = IsAllowingChildren(item);
             // decision
@@ -72,26 +86,33 @@ namespace MainProject.CreationalPatterns.Builder
                 allowChildrenDecision = allowChildren;
             }
 
-            return allowChildrenDecision;
+            return (allowChildrenDecision, acResult.thrownError);
         }
         public FunctionalNester<T> AddChild(T child, bool allowChildren = true)
         {
-            CheckAddChildrenAvailability();
-            var allowChildrenDecision = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
+            if (!CheckAddChildrenAvailability())
+            {
+                return this;
+            }
+            var (allowChildrenDecision,thrownError) = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
             var ch = new FunctionalNester<T>(ToStringImplementation)
             {
-                Item = child, Parent = this, AllowChildren = allowChildrenDecision
+                Item = child, Parent = this, AllowChildren = allowChildrenDecision, ThrownErrorOnChildrenAdd = thrownError
             };
             Children.Add(ch);
             return this;
         }
         public FunctionalNester<T> AddChild(T child, out FunctionalNester<T> element, bool allowChildren = true)
         {
-            CheckAddChildrenAvailability();
-            var allowChildrenDecision = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
+            if (!CheckAddChildrenAvailability())
+            {
+                element = null;
+                return this;
+            }
+            var (allowChildrenDecision,thrownError) = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
             var ch = new FunctionalNester<T>(ToStringImplementation)
             {
-                Item = child, Parent = this, AllowChildren = allowChildrenDecision
+                Item = child, Parent = this, AllowChildren = allowChildrenDecision, ThrownErrorOnChildrenAdd = thrownError
             };
             Children.Add(ch);
             element = ch;
@@ -99,22 +120,29 @@ namespace MainProject.CreationalPatterns.Builder
         }
         public FunctionalNester<T> WithChild(T child, bool allowChildren = true)
         {
-            CheckAddChildrenAvailability();
-            var allowChildrenDecision = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
+            if (!CheckAddChildrenAvailability())
+            {
+                return this;
+            }
+            var (allowChildrenDecision,thrownError) = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
             var ch = new FunctionalNester<T>(ToStringImplementation)
             {
-                Item = child, Parent = this , AllowChildren = allowChildrenDecision
+                Item = child, Parent = this , AllowChildren = allowChildrenDecision, ThrownErrorOnChildrenAdd = thrownError
             };
             Children.Add(ch);
             return ch;
         }
         public FunctionalNester<T> WithChild(T child, out FunctionalNester<T> element, bool allowChildren = true)
         {
-            CheckAddChildrenAvailability();
-            var allowChildrenDecision = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
+            if (!CheckAddChildrenAvailability())
+            {
+                element = null;
+                return this;
+            }
+            var (allowChildrenDecision,thrownError) = CheckAddChildrenAllowabilityOfThis(child, allowChildren);
             var ch = new FunctionalNester<T>(ToStringImplementation)
             {
-                Item = child, Parent = this, AllowChildren = allowChildrenDecision
+                Item = child, Parent = this, AllowChildren = allowChildrenDecision, ThrownErrorOnChildrenAdd = thrownError
             };
             Children.Add(ch);
             element = ch;
@@ -150,7 +178,7 @@ namespace MainProject.CreationalPatterns.Builder
     class HtmlTag
     {
         public string Name { get; set; }
-        [AllowChildrenBinder] 
+        [AllowChildrenBinder(ThrownError = false)] 
         public bool IsTag { get; }
         private List<(string attributeName, string attibuteValue)> _attributes;
 
@@ -290,7 +318,7 @@ namespace MainProject.CreationalPatterns.Builder
             root
             .WithChild(HtmlTag.Build("child-1")) // root
                 .WithChild(new HtmlTag("Osama Al Banna" , false))
-                    // .AddChild(new HtmlTag("Any")) // if we un Comment this : this will cause an exception 
+                    .AddChild(new HtmlTag("Any")) // if we un Comment this : this will cause an exception 
                 .ToParent(2)
             .WithChild(new HtmlTag("child-2").WithAttribute("disabled")) // child-2
                 .WithChild(new HtmlTag("child-2-1").WithAttribute("href" ,"google") , out var child21) // child-2-1 
