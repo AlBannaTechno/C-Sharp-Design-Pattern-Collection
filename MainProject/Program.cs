@@ -1,6 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using MainProject.SOLID_PRINCIPLES.Solve;
+﻿using MainProject.CreationalPatterns.Builder;
+using MainProject.CreationalPatterns.Builder.FacetedBuilder.FBWorks;
+using MainProject.CreationalPatterns.Builder.FunctionalNester.FunctionalBuilderWorks;
+using MainProject.CreationalPatterns.Factories.F7AbstractFactoryWorksOCP;
+using MainProject.CreationalPatterns.Prototype.P_1_WithICloneable;
+using MainProject.CreationalPatterns.Prototype.P_2_CopyConstructor;
+using MainProject.CreationalPatterns.Prototype.P_3_CopyWithSerialization;
+using MainProject.CreationalPatterns.Singleton.S_1_SingletonImplementation;
 
 namespace MainProject
 {
@@ -8,8 +13,7 @@ namespace MainProject
     {
         static void Main(string[] args)
         {
-            LiskovSubstitution.Run();
-            
+            SingletonImplementation.Run();
         }
     }
 }

@@ -11,4 +11,10 @@
       <Folder Include="StructuralPatterns" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="_LocalData\userRooms.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
