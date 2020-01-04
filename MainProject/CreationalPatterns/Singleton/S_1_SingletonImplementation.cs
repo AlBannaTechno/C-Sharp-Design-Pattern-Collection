@@ -7,7 +7,7 @@ namespace MainProject.CreationalPatterns.Singleton
 {
     namespace S_1_SingletonImplementation
     {
-        public static class EnumerableExt
+        static class EnumerableExt
         {
             // Due to very low speed of my internet cable [internet speed 8 kb/s]
             // i can not install ManyLinq package
