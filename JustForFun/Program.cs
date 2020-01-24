@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace JustForFun
 {
@@ -10,6 +11,8 @@ namespace JustForFun
             var x = new Vec();
             var r= x + x *x %x;
             Console.WriteLine($"Hello World! {r}");
+
+
         }
     }
 }
