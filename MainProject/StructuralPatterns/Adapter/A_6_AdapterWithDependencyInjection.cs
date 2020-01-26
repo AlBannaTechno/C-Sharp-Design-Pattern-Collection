@@ -7,12 +7,12 @@ namespace MainProject.StructuralPatterns.Adapter
 {
   namespace A6AdapterWithDependencyInjection
   {
-    public interface ICommand
+    interface ICommand
     {
       void Execute();
     }
 
-    public class OpenCommand : ICommand
+    class OpenCommand : ICommand
     {
       public void Execute()
       {
@@ -20,7 +20,7 @@ namespace MainProject.StructuralPatterns.Adapter
       }
     }
 
-    public class CloseCommand : ICommand
+    class CloseCommand : ICommand
     {
       public void Execute()
       {
@@ -28,7 +28,7 @@ namespace MainProject.StructuralPatterns.Adapter
       }
     }
 
-    public class Button
+    class Button
     {
       private readonly ICommand _command;
 
@@ -43,7 +43,7 @@ namespace MainProject.StructuralPatterns.Adapter
       }
     }
 
-    public class Editor
+    class Editor
     {
       private readonly IEnumerable<Button> _buttons;
 
