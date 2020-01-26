@@ -310,6 +310,20 @@ namespace MainProject.StructuralPatterns.Adapter
       {
       }
 
+      // additional operator  [Not included in the base abstract class]
+      public static Vector3I operator % (Vector3I source, Vector3I dist)
+      {
+        return new Vector3I(source.X % dist.X, source.Y % dist.Y, source.Z % dist.Z);
+      }
+
+      // override operator of the base abstract class
+      // we will produce false result just to demonstrate that every thing work correctly
+      // and the base operator was overriden
+      public static Vector3I operator - (Vector3I source, Vector3I dist)
+      {
+        return new Vector3I(1 , 1 , 1);
+      }
+
       public int X
       {
         get => this[0];
@@ -347,7 +361,11 @@ namespace MainProject.StructuralPatterns.Adapter
 
         Console.WriteLine(vec3Final);
         Console.WriteLine(vec3Final + 3);
-        Console.WriteLine(vec3Final.Z);
+        Console.WriteLine(vec3I1 %  vec3Final);
+
+        // not rela result , to get real result , modify (-)operator in Vector3I to do actual subtract or remove it
+        // to enable base class (-)operator
+        Console.WriteLine(vec3I1 -  vec3Final);
 
       }
     }
