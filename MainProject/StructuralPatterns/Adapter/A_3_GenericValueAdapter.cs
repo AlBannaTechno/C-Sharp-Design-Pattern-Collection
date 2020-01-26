@@ -116,8 +116,9 @@ namespace MainProject.StructuralPatterns.Adapter
 
     #region Vector Typed Bases
 
-    public class VectorOfInt<TDim> : Vector<VectorOfInt<TDim>, int, TDim>
+    public class VectorOfInt<TSelf, TDim> : Vector<VectorOfInt<TSelf,TDim>, int, TDim>
       where TDim : IInteger, new()
+      where TSelf : VectorOfInt<TSelf, TDim>, new()
     {
       public VectorOfInt()
       {
@@ -127,9 +128,13 @@ namespace MainProject.StructuralPatterns.Adapter
       {
       }
 
-      public static VectorOfInt<TDim> operator + (VectorOfInt<TDim> lhs, VectorOfInt<TDim> rhs)
+      // we can move this method up to Vector class itself
+      // but this will be very dangerous because we may work with vec of complex types
+      // so arithmetic operation will not work correctly
+      // so we should create operators and toString , for every type `int , float, ...`
+      public static TSelf operator + (VectorOfInt<TSelf, TDim> lhs, TSelf rhs)
       {
-        var result = new VectorOfInt<TDim>();
+        var result = new TSelf();
         for (int i = 0; i < result.Dim; i++)
         {
           result[i] = lhs[i] + rhs[i];
@@ -143,7 +148,7 @@ namespace MainProject.StructuralPatterns.Adapter
 
     #region Vector Type Cpacity Bases
 
-    public class Vector2I : VectorOfInt<Dimensions.Two>
+    public class Vector2I : VectorOfInt<Vector2I, Dimensions.Two>
     {
       public Vector2I()
       {
@@ -159,7 +164,7 @@ namespace MainProject.StructuralPatterns.Adapter
       }
     }
 
-    public class Vector3I : VectorOfInt<Dimensions.Two>
+    public class Vector3I : VectorOfInt<Vector3I,Dimensions.Two>
     {
       public Vector3I()
       {
@@ -178,7 +183,7 @@ namespace MainProject.StructuralPatterns.Adapter
         var vec2I = new Vector2I(2,54);
         var vec2I2 = new Vector2I(4,6);
         var vec3 = vec2I + vec2I2;
-        Console.WriteLine();
+        Console.WriteLine(vec3);
 
       }
     }
