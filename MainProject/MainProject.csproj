@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="BehavioralPatterns" />
       <Folder Include="ConcurrencyPatterns" />
-      <Folder Include="StructuralPatterns" />
     </ItemGroup>
 
     <ItemGroup>
