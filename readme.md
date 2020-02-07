@@ -1,13 +1,13 @@
-##### Design Pattern Implementations In C#
+#### Design Pattern Implementations In C# 8
 
 This projects contains all design patterns implemented in C# 8
 `This is an update of the old/legacy project [removed]`
 
 ##### Keys to understand this projects and get most benefits
-* you should familiar with advanced and most recent c# features
-    * you may need some C++/17 knowledge in some patterns implementations
+* you should familiar with advanced and most recent c# 8 features
+    * you may need some C++/17+ knowledge in some patterns implementations
 * You should read at least one book about design pattern and solid principles
-* You must read the source code in order way
+* You must read the source code in ordered way
     * For Patterns we will explains the order below
     * For patterns implementations every files should start with {C}\_\[N\]\_description
         * You must track this order :
@@ -51,7 +51,7 @@ This projects contains all design patterns implemented in C# 8
     * Template Method
     * Visitor
     
-#### Since this project is a replacement of the old project this not completed yet, so you may found shortage in description
+#### Since this project is a replacement of the old project this not completed yet, so you may found shortage in descriptions
 with some not-completed examples, but i think by `15 of feb 2020` the update will be completed
    
 #### Also notice , C++ Design patterns repository also removed , until i update it to C++ 20 i will not publish it , may published by `may 2020`
