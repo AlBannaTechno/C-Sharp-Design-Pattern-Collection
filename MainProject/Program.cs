@@ -14,6 +14,12 @@ using MainProject.CreationalPatterns.Prototype.P_1_WithICloneable;
 using MainProject.CreationalPatterns.Prototype.P_2_CopyConstructor;
 using MainProject.CreationalPatterns.Prototype.P_3_CopyWithSerialization;
 using MainProject.CreationalPatterns.Singleton.S_1_SingletonImplementation;
+using MainProject.StructuralPatterns.Adapter;
+using MainProject.StructuralPatterns.Adapter.A1VectorRasterNoCaching;
+using MainProject.StructuralPatterns.Adapter.A2GenericValueAdapter;
+using MainProject.StructuralPatterns.Adapter.A2GenericValueAdapterWithFullVectorImpHyperPropagation;
+using MainProject.StructuralPatterns.Adapter.A2VectorRasterWithCaching;
+using MainProject.StructuralPatterns.Adapter.A6AdapterWithDependencyInjectionAndMetaData;
 
 [assembly: InternalsVisibleTo("Testing")]
 namespace MainProject
@@ -22,7 +28,7 @@ namespace MainProject
     {
         static void Main(string[] args)
         {
-            DecoratorWithAutofac.Run();
+            AdapterWithDiAutofacMetaData.Run();
         }
     }
 }
