@@ -37,7 +37,7 @@ This projects contains all design patterns implemented in C# 8
     * Facade
     * FlyWight
     * Proxy
-* Behavioural
+* Behavioural Patterns
     * Chain Of Responsibility
     * Command
     * Interpreter
@@ -54,4 +54,4 @@ This projects contains all design patterns implemented in C# 8
 #### Since this project is a replacement of the old project this not completed yet, so you may found shortage in description
 with some not-completed examples, but i think by `15 of feb 2020` the update will be completed
    
-#### Also notice , C++ Design pattern repository also removed , until i update it to C++ 20 i will not publish it , may published by `may 2020`
+#### Also notice , C++ Design patterns repository also removed , until i update it to C++ 20 i will not publish it , may published by `may 2020`
