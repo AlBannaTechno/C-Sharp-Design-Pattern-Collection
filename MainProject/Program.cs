@@ -20,6 +20,7 @@ using MainProject.StructuralPatterns.Adapter.A2GenericValueAdapter;
 using MainProject.StructuralPatterns.Adapter.A2GenericValueAdapterWithFullVectorImpHyperPropagation;
 using MainProject.StructuralPatterns.Adapter.A2VectorRasterWithCaching;
 using MainProject.StructuralPatterns.Adapter.A6AdapterWithDependencyInjectionAndMetaData;
+using MainProject.StructuralPatterns.FlyWight.F2TextFormatter;
 
 [assembly: InternalsVisibleTo("Testing")]
 namespace MainProject
@@ -28,7 +29,7 @@ namespace MainProject
     {
         static void Main(string[] args)
         {
-            AdapterWithDiAutofacMetaData.Run();
+            TextFormatting.Run();
         }
     }
 }
