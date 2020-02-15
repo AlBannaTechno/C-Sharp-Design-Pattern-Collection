@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MainProject.CreationalPatterns.Singleton.S_1_SingletonImplementation;
-using NUnit.Framework;
+
 
 namespace MainProject.CreationalPatterns.Singleton
 {
