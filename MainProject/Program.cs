@@ -21,6 +21,7 @@ using MainProject.StructuralPatterns.Adapter.A2GenericValueAdapterWithFullVector
 using MainProject.StructuralPatterns.Adapter.A2VectorRasterWithCaching;
 using MainProject.StructuralPatterns.Adapter.A6AdapterWithDependencyInjectionAndMetaData;
 using MainProject.StructuralPatterns.FlyWight.F2TextFormatter;
+using MainProject.StructuralPatterns.Proxy.P1ProtectionProxy;
 
 [assembly: InternalsVisibleTo("Testing")]
 namespace MainProject
@@ -29,7 +30,7 @@ namespace MainProject
     {
         static void Main(string[] args)
         {
-            TextFormatting.Run();
+            ProtectionProxy.Run();
         }
     }
 }
