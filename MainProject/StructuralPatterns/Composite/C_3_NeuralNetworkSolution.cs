@@ -34,6 +34,12 @@ namespace MainProject.CreationalPatterns.Composite
             public float Value;
             public List<Neuron> In, Out;
 
+            public Neuron(List<Neuron> @in = null, List<Neuron> @out = null)
+            {
+                In = @in ?? new List<Neuron>();
+                Out = @out ?? new List<Neuron>();
+            }
+
             public void ConnectTo(Neuron other)
             {
                 Out.Add(other);
