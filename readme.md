@@ -13,7 +13,7 @@ This projects contains most of object oriented design patterns implemented in C#
 * you should familiar with advanced and most recent c# 8 features
     * you may need some C++/17+ knowledge in some patterns implementations
 * You should read at least one book about design pattern and solid principles
-    * if you main C++ developer, you must start with [Design Patterns: Elements of Reusable Object-Oriented Software ](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612)
+    * if you main C++ developer, you should start with [Design Patterns: Elements of Reusable Object-Oriented Software ](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612)
          * you will need to know legacy C++ code, si if you just mess with C++ start from C++11, you may find some strange code, since many thing has been changed
          , but i prefere to study old [c++3 specifications](https://en.wikipedia.org/wiki/C%2B%2B03) [cppreference](https://en.cppreference.com/w/cpp/language/history) and then read this book, just notice **cppreference** altered c++98 and c++03 due to legacy code base conflication and buggy implementations, but there is some resources
             * [DDS-PSM-Cxx - specifications c++2003](https://www.omg.org/spec/DDS-PSM-Cxx/About-DDS-PSM-Cxx/)
@@ -21,6 +21,8 @@ This projects contains most of object oriented design patterns implemented in C#
             * [STD, both specifications and implementation, The Best](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3690.pdf)
          
     * if you a pure C# developer: [Dofactory-Design-Patterns](https://www.dofactory.com/net/design-patterns)
+    
+    * You can search in google for `design patterns` and you will find a lot of books , toutrials and videos
     
     
 * You must read the source code in ordered way
