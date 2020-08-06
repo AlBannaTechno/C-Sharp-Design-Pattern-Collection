@@ -14,7 +14,7 @@ This projects contains most of object oriented design patterns implemented in C#
     * you may need some C++/17+ knowledge in some patterns implementations
 * You should read at least one book about design pattern and solid principles
     * if you main C++ developer, you should start with [Design Patterns: Elements of Reusable Object-Oriented Software ](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612)
-         * you will need to know legacy C++ code, si if you just mess with C++ start from C++11, you may find some strange code, since many thing has been changed
+         * you will need to know legacy C++ code, so if you just mess with C++ start from C++11, you may find some strange pieces of code, since many thing has been changed
          , but i prefere to study old [c++3 specifications](https://en.wikipedia.org/wiki/C%2B%2B03) [cppreference](https://en.cppreference.com/w/cpp/language/history) and then read this book, just notice **cppreference** altered c++98 and c++03 due to legacy code base conflication and buggy implementations, but there is some resources
             * [DDS-PSM-Cxx - specifications c++2003](https://www.omg.org/spec/DDS-PSM-Cxx/About-DDS-PSM-Cxx/)
             * [GCC GNU, only implementation status](https://gcc.gnu.org/onlinedocs/libstdc++/manual/status.html#status.iso.1998)
